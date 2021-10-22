@@ -19,8 +19,8 @@ WITH player_info_retention_stat AS (
         DISTINCT p.player_id,
         p.joined,
         IF(MAX(day) OVER (PARTITION BY p.player_id) >= joined+30, 1, 0) AS retention_status,
-    FROM `juno-da-bootcamp-project-1.raw_data.player_info` p
-    LEFT JOIN `juno-da-bootcamp-project-1.raw_data.matches_info` m
+    FROM `juno-da-bootcamp-project-1.raw_data.player_info` AS p
+    LEFT JOIN `juno-da-bootcamp-project-1.raw_data.matches_info` AS m
     ON p.player_id = m.player_id)
 ```
 The above allowed us to create a temporary table called **player_info_retention_stat**, using _WITH - AS_, that returns a **1** if the player was retained (their latest game played was after 30 days of joining the game) or a **0** if they were not retained (they did not play a game after 30 days of joining). 
