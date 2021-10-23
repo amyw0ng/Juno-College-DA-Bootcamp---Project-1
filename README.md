@@ -56,3 +56,5 @@ This **fractional_retention** was then used with the _CASE - WHEN_ to calculate 
 (fractional_retention current day MINUS fractional_retention of previous day) DIVIDED BY fractional_retention of previous day
 ```
 All of the above allowed us to explore the 30-day rolling retention for the game over the past year.
+
+
