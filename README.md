@@ -1,10 +1,11 @@
 # Juno College DA Bootcamp - Project 1
 
-![Pixel Game](https://i.pinimg.com/originals/37/d7/60/37d760d25a939ac8742c74dd4812310d.gif")
+<p align="center"><img width="800" height="" src="https://img.itch.zone/aW1nLzQ5ODA4NTAuZ2lm/original/edO3Z6.gif"></p>
 
-## Background
 
-Let's get some background! We've been hired by a mobile gaming company and on the one-year anniversary, we've been tasked with investigating the player retention to learn how our mobile game has performed this past year.
+## Let's get some background!
+
+We've been hired by a mobile gaming company and on the one-year anniversary, we've been tasked with investigating the player retention to learn how our mobile game has performed this past year.
 
 For our investigation we were provided with:
 - Match information, including the players who matched against each other, and the outcome
@@ -13,7 +14,11 @@ For our investigation we were provided with:
 
 ## 30-Day Rolling Retention
 
-First off, we defined retention based on whether or not a player played a game 30 days after joining the game. In order to determine which players fall into this category, we used:
+First off, we defined retention based on whether or not a player played a game 30 days after joining the game. We wanted to explore the 30-day rolling retention for the past year, specifically for those that played our game, and see what our percent retention was since the game went live and whether or not we've seen any growth throughout the year. 
+
+### To determine the above, the following steps were taken:
+
+**Step 1: We determined which players had played a game 30 days after joining:**
 ```
 WITH player_info_retention_stat AS (
     SELECT 
@@ -26,7 +31,7 @@ WITH player_info_retention_stat AS (
 ```
 The above allowed us to create a temporary table called **player_info_retention_stat**, using _WITH - AS_, that returns a **1** if the player was retained (their latest game played was after 30 days of joining the game) or a **0** if they were not retained (they did not play a game after 30 days of joining). 
 
-We then used:
+**Step 2: We determined the retention rate and change in retention per day**
 ```
 SELECT 
     *,
@@ -47,7 +52,7 @@ FROM (
     ORDER BY joined)
 ORDER BY join_day
 ```
-In the query above, we grouped the player data by the day on which they joined the game to calculate:
+In the query above, we grouped the player data based on when they joined the game to calculate:
 - **total_joined**: The total number of players who joined each day 
 - **total_retained**: The total number of players who were retained each day based on the 30-day retention
 - **fractional_retention**: The fraction of players that were retained given the total number of players each day
@@ -57,7 +62,6 @@ This **fractional_retention** was then used with the _CASE - WHEN_ to calculate 
 (fractional_retention current day MINUS fractional_retention of previous day) DIVIDED BY fractional_retention of previous day
 ```
 All of the above allowed us to explore the 30-day rolling retention for the game over the past year.
-
 
 ### 30-Day Rolling Retention Analysis
 
@@ -76,7 +80,7 @@ For our second investigation, we wanted to players from the 30-day retention gro
 
 In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to to control for the fact that some players might have played more games within the first 30 days since playing more games could give a higher chance of longer win-streaks by nature so we included that data in our investigation.
 
-To determine the above, the following steps were taken.
+### To determine the above, the following steps were taken:
 
 **STEP 1: We identified when a new win-streak happened**
 ```
@@ -149,6 +153,18 @@ WITH new_streaks AS (
 
 ```
 
+**STEP 5: Again, we determined whether or not a player was retained based on if they played a game 30 days after joining**
+```
+    player_info_retention_stat AS (
+    SELECT 
+        DISTINCT p.player_id,
+        p.joined,
+        IF(MAX(day) OVER (PARTITION BY p.player_id) >= joined+30, 1, 0) AS retention_status,
+    FROM `juno-da-bootcamp-project-1.raw_data.player_info` p
+    LEFT JOIN `juno-da-bootcamp-project-1.raw_data.matches_info` m
+    ON p.player_id = m.player_id)
+```
+
 **STEP 5: Finally, we found the longest win-streak per player and joined this with the total games played and their retention status**
 ```
 SELECT
@@ -158,7 +174,7 @@ SELECT
      retention_status,
  FROM
      records_per_streak 
- JOIN `juno-da-bootcamp-project-1.raw_data.player_info_retention_stat` pr
+ JOIN player_info_retention_stat AS pr
  ON records_per_streak.player_id = pr.player_id
  JOIN total_games_info AS tgi
  ON tgi.player_id = records_per_streak.player_id
