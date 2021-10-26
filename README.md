@@ -165,7 +165,7 @@ WITH new_streaks AS (
     ON p.player_id = m.player_id)
 ```
 
-**STEP 5: Finally, we found the longest win-streak per player and joined this with the total games played and their retention status**
+**STEP 6: Finally, we found the longest win-streak per player and joined this with the total games played and their retention status**
 ```
 SELECT
      records_per_streak.player_id,
