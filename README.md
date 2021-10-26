@@ -73,11 +73,11 @@ In looking at the growth rate, while our retention has been great, we do see tha
 
 For our second investigation, we wanted to players from the 30-day retention group had a higher win-streaks within their first 30 days of joining the game compared to those that were not retained. We wanted to explore if there was a correlation here and whether win-streaks could be a predictor for the 30-day retention.
 
-In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to keep in mind the total games each player played as a control since playing more games would give a higher chance of longer win-streaks by nature. 
+In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to to control for the fact that some players might have played more games within the first 30 days since playing more games could give a higher chance of longer win-streaks by nature so we included that data in our investigation.
 
 To determine the above, the following steps were taken.
 
-**STEP 1: Identifying when a new win-streak happens**
+**STEP 1: We identified when a new win-streak happened**
 ```
 WITH new_streaks AS (
     SELECT
@@ -107,7 +107,7 @@ WITH new_streaks AS (
             m.day <= p.joined+30)),
  ```
  
- **STEP 2: Assigning a unique number to each win-streak per player**
+ **STEP 2: We assigned a unique number to each win-streak per player**
 ```
     streak_no_table AS (
     SELECT
@@ -119,7 +119,7 @@ WITH new_streaks AS (
         outcome = 'win'),
  ```
  
- **STEP 3: Counting the number of wins per streak for each player**
+ **STEP 3: We counted the number of wins per streak for each player**
  ```
     records_per_streak AS (
     SELECT
@@ -129,10 +129,26 @@ WITH new_streaks AS (
     FROM streak_no_table
     GROUP BY
         player_id,
-        streak_no)
+        streak_no),
 ```
 
-**STEP 4: Finally, we can find the longest win-streak per player and the total games they played within the first 30 days**
+**STEP 4: We counted the total number of games each player played within the first 30 days of joining**
+```
+    total_games_info AS (
+    SELECT 
+        m.player_id
+        COUNT(*) AS total_games
+    FROM `juno-da-bootcamp-project-1.raw_data.matches_info` m
+    JOIN `juno-da-bootcamp-project-1.raw_data.player_info` p
+    ON m.player_id = p.player_id
+    WHERE 
+        m.day <= p.joined+30)
+    GROUP BY player_id
+    )
+
+```
+
+**STEP 5: Finally, we found the longest win-streak per player and joined this with the total games played and their retention status**
 ```
 SELECT
      records_per_streak.player_id,
