@@ -10,7 +10,7 @@ For our investigation we were provided with:
 - Player information, including information like the player's age and when they joined
 
 
-## 30-Day Rolling Retention Query
+## 30-Day Rolling Retention
 
 First off, we defined retention based on whether or not a player played a game 30 days after joining the game. In order to determine which players fall into this category, we used:
 ```
@@ -69,33 +69,85 @@ From our data above, we saw an average 30-day retention of 65.62% per day for ou
 In looking at the growth rate, while our retention has been great, we do see that there isn't much change in growth over the course of the year and it has been quite stagnant. The changes we may have implemented this year to the game doesn't seem to have had an impact on the player retention so far so it would be good to explore other incentive systems to make further improvements. This may also be a sign for us to start directing our energy into long-term retention for those who have stayed with us past the 30-day retention benchmark.
 
 
-## Effects of Winning Query
+## Effects of Win-Streaks
 
-For our second investigation, we wanted to explore whether wins could be a predictor for whether a player stays past the 30-day retention period. In particular, whether having longer win-streaks could incentivize players to keep playing.
+For our second investigation, we wanted to players from the 30-day retention group had a higher win-streaks within their first 30 days of joining the game compared to those that were not retained. We wanted to explore if there was a correlation here and whether win-streaks could be a predictor for the 30-day retention.
 
-In order to explore this, we first looked to see if players with a rolling 20-day retention generally had higher win-rates. 
+In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to keep in mind the total games each player played as a control since playing more games would give a higher chance of longer win-streaks by nature. 
 
+To determine the above, the following steps were taken.
+
+**STEP 1: Identifying when a new win-streak happens**
 ```
-SELECT 
-    m.player_id,
-    COUNTIF(outcome = "win")/COUNT(outcome) AS percent_win,  
-    retention_status
-FROM
-    (SELECT 
-        m.player_id,
-        m.outcome,
-        m.day
-    FROM `juno-da-bootcamp-project-1.raw_data.matches_info` m
-    JOIN `juno-da-bootcamp-project-1.raw_data.player_info` p
-    ON m.player_id = p.player_id
-    WHERE 
-        m.day <= p.joined+30) AS m
-JOIN `juno-da-bootcamp-project-1.raw_data.player_info_retention_stat` pr
-ON m.player_id = pr.player_id
-GROUP BY 
-    m.player_id,
-    retention_status
+WITH new_streaks AS (
+    SELECT
+      player_id,
+      day,
+      outcome,
+      CASE 
+            WHEN
+            outcome = 'win' AND
+            LAG(outcome) OVER (PARTITION BY player_id ORDER BY day) = 'loss' 
+                THEN 1 
+            WHEN 
+            outcome = 'win' AND
+            LAG(outcome) OVER (PARTITION BY player_id ORDER BY day) IS NULL
+                THEN 1
+            ELSE 0 
+        END AS new_streak
+    FROM (
+        SELECT 
+            m.player_id,
+            m.outcome,
+            m.day
+        FROM `juno-da-bootcamp-project-1.raw_data.matches_info` m
+        JOIN `juno-da-bootcamp-project-1.raw_data.player_info` p
+        ON m.player_id = p.player_id
+        WHERE 
+            m.day <= p.joined+30)),
+ ```
+ 
+ **STEP 2: Assigning a unique number to each win-streak per player**
+```
+    streak_no_table AS (
+    SELECT
+        player_id,
+        day,
+        SUM(new_streak) OVER (PARTITION BY player_id ORDER BY day) streak_no
+    FROM new_streaks 
+    WHERE
+        outcome = 'win'),
+ ```
+ 
+ **STEP 3: Counting the number of wins per streak for each player**
+ ```
+    records_per_streak AS (
+    SELECT
+        player_id,
+        streak_no,
+        COUNT(*) AS counter
+    FROM streak_no_table
+    GROUP BY
+        player_id,
+        streak_no)
 ```
 
-The subquery from the query above pulls the match information that were played in the first 30-days a player joined the game. We then do a count of all wins divded by thte total number of games the player played in total to determine their win-rate. Our results showed that there were no significant differences between the two groups and their average win-rates were both at 50%.
+**STEP 4: Finally, we can find the longest win-streak per player and the total games they played within the first 30 days**
+```
+SELECT
+     records_per_streak.player_id,
+     total_games,
+     MAX(counter) longest_win_streak,
+     retention_status,
+ FROM
+     records_per_streak 
+ JOIN `juno-da-bootcamp-project-1.raw_data.player_info_retention_stat` pr
+ ON records_per_streak.player_id = pr.player_id
+ JOIN total_games_info AS tgi
+ ON tgi.player_id = records_per_streak.player_id
+ GROUP BY 
+     records_per_streak.player_id,
+     total_games,
+     retention_status
+```
 
