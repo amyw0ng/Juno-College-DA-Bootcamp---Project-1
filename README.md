@@ -148,8 +148,7 @@ WITH new_streaks AS (
     ON m.player_id = p.player_id
     WHERE 
         m.day <= p.joined+30)
-    GROUP BY player_id
-    )
+    GROUP BY player_id),
 
 ```
 
