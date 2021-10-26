@@ -76,9 +76,9 @@ In looking at the growth rate, while our retention has been great, we do see tha
 
 ## Effects of Win-Streaks
 
-For our second investigation, we wanted to players from the 30-day retention group had a higher win-streaks within their first 30 days of joining the game compared to those that were not retained. We wanted to explore if there was a correlation here and whether win-streaks could be a predictor for the 30-day retention.
+For our second investigation, we wanted to see if players who were retained after 30 days had a higher win-streak within their first 30 days of joining the game compared to those that were not retained. We wanted to explore if there was a correlation here and whether win-streaks could be a predictor for the 30-day retention.
 
-In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to to control for the fact that some players might have played more games within the first 30 days since playing more games could give a higher chance of longer win-streaks by nature so we included that data in our investigation.
+In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to to control for the fact that some players might have played more games within the first 30 days compared to others. We assumed that playing more games could give a higher chance of longer win-streaks by nature, so the total games played per player was taken into account for our analysis.
 
 ### To determine the above, the following steps were taken:
 
