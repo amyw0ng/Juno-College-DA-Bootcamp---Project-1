@@ -71,6 +71,31 @@ In looking at the growth rate, while our retention has been great, we do see tha
 
 ## Effects of Winning Query
 
-For our second investigation, we wanted to exploring whether wins played any part in incentivizing players to keep playing. Particularly, whether win-streaks were the same or 
+For our second investigation, we wanted to explore whether wins could be a predictor for whether a player stays past the 30-day retention period. In particular, whether having longer win-streaks could incentivize players to keep playing.
 
+In order to explore this, we first looked to see if players with a rolling 20-day retention generally had higher win-rates. 
+
+```
+SELECT 
+    m.player_id,
+    COUNTIF(outcome = "win")/COUNT(outcome) AS percent_win,  
+    retention_status
+FROM
+    (SELECT 
+        m.player_id,
+        m.outcome,
+        m.day
+    FROM `juno-da-bootcamp-project-1.raw_data.matches_info` m
+    JOIN `juno-da-bootcamp-project-1.raw_data.player_info` p
+    ON m.player_id = p.player_id
+    WHERE 
+        m.day <= p.joined+30) AS m
+JOIN `juno-da-bootcamp-project-1.raw_data.player_info_retention_stat` pr
+ON m.player_id = pr.player_id
+GROUP BY 
+    m.player_id,
+    retention_status
+```
+
+The subquery from the query above pulls the match information that were played in the first 30-days a player joined the game. We then do a count of all wins divded by thte total number of games the player played in total to determine their win-rate. Our results showed that there were no significant differences between the two groups and their average win-rates were both at 50%.
 
