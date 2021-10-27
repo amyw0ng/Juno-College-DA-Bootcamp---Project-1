@@ -1,6 +1,6 @@
 # Juno College DA Bootcamp - Project 1
 
-<p align="center"><img width="800" height="" src="https://img.itch.zone/aW1nLzQ5ODA4NTAuZ2lm/original/edO3Z6.gif"></p>
+<p align="center"><img width="800" height="" src="https://miro.medium.com/max/3200/1*rB-3Q2k7o9qk8IyAzx-TRA.gif"></p>
 
 
 ## Let's get some background!
@@ -65,11 +65,11 @@ All of the above allowed us to explore the 30-day rolling retention for the game
 
 ### 30-Day Rolling Retention Analysis
 
-<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Percent%20Retention%20and%20Growth%20Rate%20Graph.png?raw=true"></p>
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Percent%20Retention%20and%20Growth%20Rate%20of%20Retention%20over%20the%20Year%20Graph.png?raw=true"></p>
 
 Given we were working with a 30-day rolling retention, we excluded the last 30 days of the year from our analysis because those who joined in the last 30 days of the year would have automatically been deemed not-retained given we were only working with data up to the end of the year.
 
-From our data above, we saw an average 30-day retention of 65.62% per day for our mobile game over the past year. This was quite consistent for the whole year. This is great considering the mobile app bench mark for 30-day retention (according to https://www.geckoboard.com/best-practice/kpi-examples/retention-rate/) sits at 42% - more specifically for mobile games it averages at 27%. Our mobile app has been performing amazingly well for it's first year!
+From our data above, we saw an average 30-day retention of 65.62% per day for our mobile game over the past year. This was quite consistent for the whole year. This is great considering the mobile app bench mark for 30-day retention (according to https://www.geckoboard.com/best-practice/kpi-examples/retention-rate/) sits at 42% - more specifically for mobile games it averages at 27%. Our mobile app has been performing amazingly well for it's first year in keeping new players engaged for more than 30 days!
 
 In looking at the growth rate, while our retention has been great, we do see that there isn't much change in growth over the course of the year and it has been quite stagnant. The changes we may have implemented this year to the game doesn't seem to have had an impact on the player retention so far so it would be good to explore other incentive systems to increase player engagement. This may also be a sign for us to start directing our energy into long-term retention for those who have stayed with us past the 30-day retention benchmark.
 
@@ -183,3 +183,22 @@ SELECT
      retention_status
 ```
 
+### Win-Streak Analysis
+
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Average%20Highest%20Win-Streak%20Graph.png?raw=true"></p>
+
+We found that the average win-streak within the first 30 days was statistically significantly higher for those that were retained after 30-days, despite having only a difference of 0.41. However, as mentioned before, we wanted to account for the fact that playing more games could naturally inflate win-streaks.
+
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Total%20Games%20Played%20in%20First%2030%20Days%20Graph.png?raw=true"></p>
+
+From our graph above, we can already see that those from the retained group played more games in total within those first 30 days compared to those that were not retained. 
+
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Total%20Games%20Played%20vs.%20Win-Streak%20Graph.png?raw=true"></p>
+
+Once we start comparing the highest average win-streaks relative to the number of games played we see a slightly different pattern emerge. For one, we were wary of making conclusions for those that played less than 7 games and those that played more than 22 games in total within the first 30 days. This was because, based on the previous graph, we saw that we had significantly smaller sample sizes for those groups so they were poor representatives. However, if we focused primarily on the 7 to 22 total games range, we could see that there was not much difference between those that were retained versus those that were not retained. This conclusion is further bolstered through a paired t-test. 
+
+From the results above, we can conclude that win-streaks is not a predictor of 30-day retention and doesn't play a part in incentivizing players to keep playing our game. As such, engagement strategies should not revolve around win-streaks.
+
+## Concluding Remarks
+
+Overall, we were able to engineer some new features in our data to explore. While there is much more we could further investigate, we were able to confirm that our mobile game has been performing quite well in engaging new players based on our 30-day retention. We saw some patterns in player behaviour relative to win-streaks that did not appear to correlate with their 30-day retention. This gave us a little insight in guiding us towards other directions in terms of setting up new engagement strategies to further grow our player base.
