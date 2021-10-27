@@ -71,7 +71,7 @@ Given we were working with a 30-day rolling retention, we excluded the last 30 d
 
 From our data above, we saw an average 30-day retention of 65.62% per day for our mobile game over the past year. This was quite consistent for the whole year. This is great considering the mobile app bench mark for 30-day retention (according to https://www.geckoboard.com/best-practice/kpi-examples/retention-rate/) sits at 42% - more specifically for mobile games it averages at 27%. Our mobile app has been performing amazingly well for it's first year!
 
-In looking at the growth rate, while our retention has been great, we do see that there isn't much change in growth over the course of the year and it has been quite stagnant. The changes we may have implemented this year to the game doesn't seem to have had an impact on the player retention so far so it would be good to explore other incentive systems to make further improvements. This may also be a sign for us to start directing our energy into long-term retention for those who have stayed with us past the 30-day retention benchmark.
+In looking at the growth rate, while our retention has been great, we do see that there isn't much change in growth over the course of the year and it has been quite stagnant. The changes we may have implemented this year to the game doesn't seem to have had an impact on the player retention so far so it would be good to explore other incentive systems to increase player engagement. This may also be a sign for us to start directing our energy into long-term retention for those who have stayed with us past the 30-day retention benchmark.
 
 
 ## Effects of Win-Streaks
