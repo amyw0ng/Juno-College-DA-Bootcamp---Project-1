@@ -80,7 +80,7 @@ For our second investigation, we wanted to see if players who were retained afte
 
 In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to to control for the fact that some players might have played more games within the first 30 days compared to others. We assumed that playing more games could give a higher chance of longer win-streaks by nature, so the total games played per player was taken into account for our analysis.
 
-### To determine the above, the following steps were taken:
+### To determine the above, the following steps were taken [^1]:
 
 **STEP 1: We identified when a new win-streak happened**
 ```
@@ -202,3 +202,6 @@ From the results above, we can conclude that win-streaks is not a predictor of 3
 ## Concluding Remarks
 
 Overall, we were able to engineer some new features in our data to explore. While there is much more we could further investigate, we were able to confirm that our mobile game has been performing quite well in engaging new players based on our 30-day retention. We saw some patterns in player behaviour relative to win-streaks that did not appear to correlate with their 30-day retention. This gave us a little insight in guiding us towards other directions in terms of setting up new engagement strategies to further grow our player base.
+
+
+[^1]: Stackoverflow reference code - https://stackoverflow.com/questions/17839015/finding-the-longest-streak-of-wins
