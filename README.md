@@ -185,7 +185,7 @@ SELECT
 
 ### Win-Streak Analysis
 
-<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Average%20Highest%20Win-Streak%20Graph.png?raw=true"></p>
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Graphs/Average%20Highest%20Win-Streak%20Graph.png?raw=true"></p>
 
 We found that the average win-streak within the first 30 days was statistically significantly higher for those that were retained after 30-days, despite having only a difference of 0.41. However, as mentioned before, we wanted to account for the fact that playing more games could naturally inflate win-streaks.
 
