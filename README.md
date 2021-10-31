@@ -65,7 +65,7 @@ All of the above allowed us to explore the 30-day rolling retention for the game
 
 ### 30-Day Rolling Retention Analysis
 
-<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Percent%20Retention%20and%20Growth%20Rate%20of%20Retention%20over%20the%20Year%20Graph.png?raw=true"></p>
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Graphs/Percent%20Retention%20and%20Growth%20Rate%20of%20Retention%20over%20the%20Year%20Graph.png?raw=true"></p>
 
 Given we were working with a 30-day rolling retention, we excluded the last 30 days of the year from our analysis because those who joined in the last 30 days of the year would have automatically been deemed not-retained given we were only working with data up to the end of the year.
 
@@ -80,7 +80,7 @@ For our second investigation, we wanted to see if players who were retained afte
 
 In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to to control for the fact that some players might have played more games within the first 30 days compared to others. We assumed that playing more games could give a higher chance of longer win-streaks by nature, so the total games played per player was taken into account for our analysis.
 
-### To determine the above, the following steps were taken:
+### To determine the above, the following steps were taken [^1]:
 
 **STEP 1: We identified when a new win-streak happened**
 ```
@@ -185,15 +185,15 @@ SELECT
 
 ### Win-Streak Analysis
 
-<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Average%20Highest%20Win-Streak%20Graph.png?raw=true"></p>
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Graphs/Average%20Highest%20Win-Streak%20Graph.png?raw=true"></p>
 
 We found that the average win-streak within the first 30 days was statistically significantly higher for those that were retained after 30-days, despite having only a difference of 0.41. However, as mentioned before, we wanted to account for the fact that playing more games could naturally inflate win-streaks.
 
-<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Total%20Games%20Played%20in%20First%2030%20Days%20Graph.png?raw=true"></p>
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Graphs/Total%20Games%20Played%20in%20First%2030%20Days%20Graph.png?raw=true"></p>
 
 From our graph above, we can already see that those from the retained group played more games in total within those first 30 days compared to those that were not retained. 
 
-<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Total%20Games%20Played%20vs.%20Win-Streak%20Graph.png?raw=true"></p>
+<p align="center"><img width="" height="" src="https://github.com/amyw0ng/Juno-College-DA-Bootcamp---Project-1/blob/main/Graphs/Total%20Games%20Played%20vs.%20Win-Streak%20Graph.png?raw=true"></p>
 
 Once we start comparing the highest average win-streaks relative to the number of games played we see a slightly different pattern emerge. For one, we were wary of making conclusions for those that played less than 7 games and those that played more than 22 games in total within the first 30 days. This was because, based on the previous graph, we saw that we had significantly smaller sample sizes for those groups so they were poor representatives. However, if we focused primarily on the 7 to 22 total games range, we could see that there was not much difference between those that were retained versus those that were not retained. This conclusion is further bolstered through a paired t-test. 
 
@@ -202,3 +202,6 @@ From the results above, we can conclude that win-streaks is not a predictor of 3
 ## Concluding Remarks
 
 Overall, we were able to engineer some new features in our data to explore. While there is much more we could further investigate, we were able to confirm that our mobile game has been performing quite well in engaging new players based on our 30-day retention. We saw some patterns in player behaviour relative to win-streaks that did not appear to correlate with their 30-day retention. This gave us a little insight in guiding us towards other directions in terms of setting up new engagement strategies to further grow our player base.
+
+
+[^1]: Stackoverflow reference code - https://stackoverflow.com/questions/17839015/finding-the-longest-streak-of-wins
