@@ -111,7 +111,8 @@ WITH new_streaks AS (
         ON m.player_id = p.player_id
         WHERE 
             m.day <= p.joined+30)),
- ```
+```
+In the subquery above, we only looked at matches that were played within the first 30 days that a player joined the game. We then denoted the start of a win streak with **1** based on if the win was preceded by a loss or if by a null (which would be the first game played). 
  
  **STEP 2: We assigned a unique number to each win-streak per player**
 ```
@@ -123,7 +124,8 @@ WITH new_streaks AS (
     FROM new_streaks 
     WHERE
         outcome = 'win'),
- ```
+```
+We then assigned a unique number to each win-streak with the 1's from the query above using the *SUM* function in combination with the *OVER (PARTITION BY...)*.
  
  **STEP 3: We counted the number of wins per streak for each player**
  ```
