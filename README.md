@@ -70,7 +70,7 @@ Google sheets reference: https://docs.google.com/spreadsheets/d/1FC4AcXgUb45kUQq
 
 Given we were working with a 30-day rolling retention, we excluded the last 30 days of the year from our analysis because those who joined in the last 30 days of the year would have automatically been deemed not-retained given we were only working with data up to the end of the year.
 
-From our data above, we saw an average 30-day retention of 65.62% per day for our mobile game over the past year. This was quite consistent for the whole year. This is great considering the mobile app bench mark for 30-day retention (according to https://www.geckoboard.com/best-practice/kpi-examples/retention-rate/) sits at 42% - more specifically for mobile games it averages at 27%. Our mobile app has been performing amazingly well for it's first year in keeping new players engaged for more than 30 days!
+From our data above, we saw an average 30-day retention of 65.62% per day for our mobile game over the past year. This was quite consistent for the whole year. This is great considering the mobile app bench mark for 30-day retention sits at 42% - more specifically for mobile games it averages at 27% [^1]. Our mobile app has been performing amazingly well for it's first year in keeping new players engaged for more than 30 days!
 
 In looking at the growth rate, while our retention has been great, we do see that there isn't much change in growth over the course of the year and it has been quite stagnant. The changes we may have implemented this year to the game doesn't seem to have had an impact on the player retention so far so it would be good to explore other incentive systems to increase player engagement. This may also be a sign for us to start directing our energy into long-term retention for those who have stayed with us past the 30-day retention benchmark.
 
@@ -81,7 +81,7 @@ For our second investigation, we wanted to see if players who were retained afte
 
 In order to explore this, we needed to determine the highest win-streak per player based on the games they played within the first 30 days of joining the game. We also wanted to to control for the fact that some players might have played more games within the first 30 days compared to others. We assumed that playing more games could give a higher chance of longer win-streaks by nature, so the total games played per player was taken into account for our analysis.
 
-### To determine the above, the following steps were taken [^1]:
+### To determine the above, the following steps were taken [^2]:
 
 **STEP 1: We identified when a new win-streak happened**
 ```
@@ -206,4 +206,5 @@ From the results above, we can conclude that win-streaks is not a predictor of 3
 Overall, we were able to engineer some new features in our data to explore. While there is much more we could further investigate, we were able to confirm that our mobile game has been performing quite well in engaging new players based on our 30-day retention. We saw some patterns in player behaviour relative to win-streaks that did not appear to correlate with their 30-day retention. This gave us a little insight in guiding us towards other directions in terms of setting up new engagement strategies to further grow our player base.
 
 
-[^1]: Stackoverflow reference code for win-streak logic - https://stackoverflow.com/questions/17839015/finding-the-longest-streak-of-wins
+[^1]: Mobile app 30-day retention industry benchmark - https://www.geckoboard.com/best-practice/kpi-examples/retention-rate/
+[^2]: Stackoverflow reference code for win-streak logic - https://stackoverflow.com/questions/17839015/finding-the-longest-streak-of-wins
