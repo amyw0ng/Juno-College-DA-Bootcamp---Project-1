@@ -201,7 +201,7 @@ From our graph above, we can already see that those from the retained group play
 
 Once we start comparing the highest average win-streaks relative to the total number of games played, we see a slightly different pattern emerge. First off, we were wary of making conclusions for those that played less than 7 games and those that played more than 22 games in total within the first 30 days. This was because, based on the previous graph, we saw that we had significantly smaller sample sizes for those groups so they were poor representatives. However, if we focused primarily on the 7 to 22 total games range, we could see that there was not much difference between those that were retained versus those that were not retained. This conclusion is further bolstered through a paired t-test which showed that the retained and not retained group were not significantly different. 
 
-From the results above, we can conclude that win-streaks is not a predictor of 30-day retention and doesn't play a part in incentivizing players to keep playing our game. As such, engagement strategies should not revolve around win-streaks.
+From the results above, we can conclude that win-streaks is not a predictor of 30-day retention and doesn't play a part in incentivizing players to keep playing our game. As such, engagement strategies for improving 30-day retention should not revolve around win-streaks.
 
 ## Concluding Remarks
 
