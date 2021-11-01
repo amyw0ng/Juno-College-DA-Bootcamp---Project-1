@@ -87,7 +87,7 @@ WITH new_streaks AS (
     JOIN `juno-da-bootcamp-project-1.raw_data.player_info` p
     ON m.player_id = p.player_id
     WHERE 
-        m.day <= p.joined+30)
+        m.day <= p.joined+30
     GROUP BY player_id),
 
     player_info_retention_stat AS (
