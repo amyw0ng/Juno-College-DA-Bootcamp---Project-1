@@ -29,7 +29,7 @@ WITH player_info_retention_stat AS (
     LEFT JOIN `juno-da-bootcamp-project-1.raw_data.matches_info` AS m
     ON p.player_id = m.player_id)
 ```
-The above allowed us to create a subquery, called **player_info_retention_stat**, that returns a **1** if the player was retained (their latest game played was after 30 days of joining the game) or a **0** if they were not retained (they did not play a game after 30 days of joining). Please note that we used a *LEFT JOIN* to include even those who downloaded our game but did not end up playing a match against another player as part of our retention stats.
+The above allowed us to create a subquery, called `player_info_retention_stat`, that returns a **1** if the player was retained (their latest game played was after 30 days of joining the game) or a **0** if they were not retained (they did not play a game after 30 days of joining). Please note that we used a `LEFT JOIN` to include even those who downloaded our game but did not end up playing a match against another player as part of our retention stats.
 
 **Step 2: We determined the retention rate and change in retention per day**
 ```sql
@@ -53,11 +53,11 @@ FROM (
 ORDER BY join_day
 ```
 In the query above, we grouped the player data based on when they joined the game to calculate:
-- **total_joined**: The total number of players who joined each day 
-- **total_retained**: The total number of players who were retained each day based on the 30-day retention
-- **fractional_retention**: The fraction of players that were retained given the total number of players each day
+- `total_joined`: The total number of players who joined each day 
+- `total_retained`: The total number of players who were retained each day based on the 30-day retention
+- `fractional_retention`: The fraction of players that were retained given the total number of players each day
 
-This **fractional_retention** was then used with the _CASE - WHEN_ to calculate the **growth_rate** per day for our final table. This was calculated based on:
+This `fractional_retention` was then used with the `CASE ... WHEN` to calculate the `growth_rate` per day for our final table. This was calculated based on:
 ```
 (fractional_retention current day MINUS fractional_retention of previous day) DIVIDED BY fractional_retention of previous day
 ```
@@ -125,7 +125,7 @@ In the subquery above, we only looked at matches that were played within the fir
     WHERE
         outcome = 'win'),
 ```
-We then assigned a unique number to each win-streak with the 1's from the query above using the *SUM* function in combination with the *OVER (PARTITION BY...)*.
+We then assigned a unique number to each win-streak with the 1's from the query above using the `SUM` function in combination with the `OVER (PARTITION BY...)`.
  
  **STEP 3: We counted the number of wins per streak for each player**
  ```sql
