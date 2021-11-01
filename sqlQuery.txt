@@ -81,7 +81,7 @@ WITH new_streaks AS (
 
     total_games_info AS (
     SELECT 
-        m.player_id
+        m.player_id,
         COUNT(*) AS total_games
     FROM `juno-da-bootcamp-project-1.raw_data.matches_info` m
     JOIN `juno-da-bootcamp-project-1.raw_data.player_info` p
