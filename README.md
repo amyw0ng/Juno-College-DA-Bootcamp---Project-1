@@ -19,7 +19,7 @@ First off, we defined retention based on whether or not a player played a game 3
 ### To determine the above, the following steps were taken:
 
 **Step 1: We determined which players had played a game 30 days after joining:**
-```
+```sql
 WITH player_info_retention_stat AS (
     SELECT 
         DISTINCT p.player_id,
@@ -32,7 +32,7 @@ WITH player_info_retention_stat AS (
 The above allowed us to create a subquery, called **player_info_retention_stat**, that returns a **1** if the player was retained (their latest game played was after 30 days of joining the game) or a **0** if they were not retained (they did not play a game after 30 days of joining). Please note that we used a *LEFT JOIN* to include even those who downloaded our game but did not end up playing a match against another player as part of our retention stats.
 
 **Step 2: We determined the retention rate and change in retention per day**
-```
+```sql
 SELECT 
     *,
     CASE 
@@ -84,7 +84,7 @@ In order to explore this, we needed to determine the highest win-streak per play
 ### To determine the above, the following steps were taken [^2]:
 
 **STEP 1: We identified when a new win-streak happened**
-```
+```sql
 WITH new_streaks AS (
     SELECT
       player_id,
@@ -115,7 +115,7 @@ WITH new_streaks AS (
 In the subquery above, we only looked at matches that were played within the first 30 days that a player joined the game. We then denoted the start of a win streak with **1** based on if the win was preceded by a loss or if by a null (which would be the first game played). 
  
  **STEP 2: We assigned a unique number to each win-streak per player**
-```
+```sql
     streak_no_table AS (
     SELECT
         player_id,
@@ -128,7 +128,7 @@ In the subquery above, we only looked at matches that were played within the fir
 We then assigned a unique number to each win-streak with the 1's from the query above using the *SUM* function in combination with the *OVER (PARTITION BY...)*.
  
  **STEP 3: We counted the number of wins per streak for each player**
- ```
+ ```sql
     records_per_streak AS (
     SELECT
         player_id,
@@ -141,7 +141,7 @@ We then assigned a unique number to each win-streak with the 1's from the query 
 ```
 
 **STEP 4: We counted the total number of games each player played within the first 30 days of joining**
-```
+```sql
     total_games_info AS (
     SELECT 
         m.player_id
@@ -156,7 +156,7 @@ We then assigned a unique number to each win-streak with the 1's from the query 
 ```
 
 **STEP 5: Again, we determined whether or not a player was retained based on if they played a game 30 days after joining**
-```
+```sql
     player_info_retention_stat AS (
     SELECT 
         DISTINCT p.player_id,
@@ -168,7 +168,7 @@ We then assigned a unique number to each win-streak with the 1's from the query 
 ```
 
 **STEP 6: Finally, we found the longest win-streak per player and joined this with the total games played and their retention status**
-```
+```sql
 SELECT
      records_per_streak.player_id,
      total_games,
