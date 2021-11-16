@@ -24,7 +24,11 @@ WITH player_info_retention_stat AS (
     SELECT 
         DISTINCT p.player_id,
         p.joined,
-        IF(MAX(day) OVER (PARTITION BY p.player_id) >= joined+30, 1, 0) AS retention_status,
+        IF(
+            MAX(day) OVER (PARTITION BY p.player_id) >= joined+30, 
+            1, 
+            0
+        ) AS retention_status,
     FROM `juno-da-bootcamp-project-1.raw_data.player_info` AS p
     LEFT JOIN `juno-da-bootcamp-project-1.raw_data.matches_info` AS m
     ON p.player_id = m.player_id)
@@ -36,11 +40,14 @@ The above allowed us to create a subquery, called `player_info_retention_stat`, 
 SELECT 
     *,
     CASE 
-        WHEN LAG(fractional_retention) OVER (ORDER BY join_day) > 0 THEN
-        (fractional_retention - LAG(fractional_retention) OVER (ORDER BY join_day)) / LAG(fractional_retention) OVER (ORDER BY join_day)
-        WHEN join_day = 1 THEN 0
+        WHEN 
+        LAG(fractional_retention) OVER (ORDER BY join_day) > 0 
+            THEN (fractional_retention - LAG(fractional_retention) OVER (ORDER BY join_day)) / LAG(fractional_retention) OVER (ORDER BY join_day)
+        WHEN 
+        join_day = 1 
+            THEN 0
         ELSE 0
-        END AS growth_rate
+    END AS growth_rate
 FROM (    
     SELECT 
         joined AS join_day,
@@ -116,7 +123,7 @@ In the subquery above, we only looked at matches that were played within the fir
  
  **STEP 2: We assigned a unique number to each win-streak per player**
 ```sql
-    streak_no_table AS (
+streak_no_table AS (
     SELECT
         player_id,
         day,
@@ -128,8 +135,8 @@ In the subquery above, we only looked at matches that were played within the fir
 We then assigned a unique number to each win-streak with the 1's from the query above using the `SUM` function in combination with the `OVER (PARTITION BY...)`.
  
  **STEP 3: We counted the number of wins per streak for each player**
- ```sql
-    records_per_streak AS (
+```sql
+records_per_streak AS (
     SELECT
         player_id,
         streak_no,
@@ -142,7 +149,7 @@ We then assigned a unique number to each win-streak with the 1's from the query 
 
 **STEP 4: We counted the total number of games each player played within the first 30 days of joining**
 ```sql
-    total_games_info AS (
+total_games_info AS (
     SELECT 
         m.player_id
         COUNT(*) AS total_games
@@ -151,13 +158,14 @@ We then assigned a unique number to each win-streak with the 1's from the query 
     ON m.player_id = p.player_id
     WHERE 
         m.day <= p.joined+30)
-    GROUP BY player_id),
+    GROUP BY 
+        player_id),
 
 ```
 
 **STEP 5: Again, we determined whether or not a player was retained based on if they played a game 30 days after joining**
 ```sql
-    player_info_retention_stat AS (
+player_info_retention_stat AS (
     SELECT 
         DISTINCT p.player_id,
         p.joined,
