@@ -4,7 +4,11 @@ WITH player_info_retention_stat AS (
     SELECT 
         DISTINCT p.player_id,
         p.joined,
-        IF(MAX(day) OVER (PARTITION BY p.player_id) >= joined+30, 1, 0) AS retention_status,
+        IF(
+            MAX(day) OVER (PARTITION BY p.player_id) >= joined+30, 
+            1, 
+            0
+        ) AS retention_status,
     FROM `juno-da-bootcamp-project-1.raw_data.player_info` AS p
     LEFT JOIN `juno-da-bootcamp-project-1.raw_data.matches_info` AS m
     ON p.player_id = m.player_id)
@@ -12,11 +16,14 @@ WITH player_info_retention_stat AS (
 SELECT 
     *,
     CASE 
-        WHEN LAG(fractional_retention) OVER (ORDER BY join_day) > 0 THEN
-        (fractional_retention - LAG(fractional_retention) OVER (ORDER BY join_day)) / LAG(fractional_retention) OVER (ORDER BY join_day)
-        WHEN join_day = 1 THEN 0
+        WHEN 
+        LAG(fractional_retention) OVER (ORDER BY join_day) > 0 
+            THEN (fractional_retention - LAG(fractional_retention) OVER (ORDER BY join_day)) / LAG(fractional_retention) OVER (ORDER BY join_day)
+        WHEN 
+        join_day = 1 
+            THEN 0
         ELSE 0
-        END AS growth_rate
+     END AS growth_rate
 FROM (    
     SELECT 
         joined AS join_day,
@@ -60,7 +67,7 @@ WITH new_streaks AS (
         WHERE 
             m.day <= p.joined+30)),
 
-    streak_no_table AS (
+streak_no_table AS (
     SELECT
         player_id,
         day,
@@ -69,7 +76,7 @@ WITH new_streaks AS (
     WHERE
         outcome = 'win'),
 
-    records_per_streak AS (
+records_per_streak AS (
     SELECT
         player_id,
         streak_no,
@@ -79,7 +86,7 @@ WITH new_streaks AS (
         player_id,
         streak_no),
 
-    total_games_info AS (
+total_games_info AS (
     SELECT 
         m.player_id,
         COUNT(*) AS total_games
@@ -88,9 +95,10 @@ WITH new_streaks AS (
     ON m.player_id = p.player_id
     WHERE 
         m.day <= p.joined+30
-    GROUP BY player_id),
+    GROUP BY 
+        player_id),
 
-    player_info_retention_stat AS (
+player_info_retention_stat AS (
     SELECT 
         DISTINCT p.player_id,
         p.joined,
